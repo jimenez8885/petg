@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PET Tracer Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+        <script>
+            // Paste the contents of activity_map.json below
+            var activityData = null; // <-- Replace null with your JSON
+            // Paste the contents of activity_curves.json below
+            var curveData = null; // <-- Replace null with your JSON
+        </script>
+        <h1 class="main-title">PET Tracer Simulator</h1>
+        <div class="controls card">
+        <div class="slider-row">
+            <label>Tracer Half-life (minutes):</label>
+            <input type="range" id="halfLife" min="1" max="30" value="10">
+            <span id="halfLifeVal">10</span>
+            <span class="info-icon" id="info-halfLife">&#x2753;</span>
+        </div>
+        <div class="slider-row">
+            <label>Tumor Uptake Rate (k<sub>in</sub>, 1/s):</label>
+            <input type="range" id="tumorKin" min="0.01" max="0.1" step="0.001" value="0.04">
+            <span id="tumorKinVal">0.04</span>
+            <span class="info-icon" id="info-tumorKin">&#x2753;</span>
+        </div>
+        <div class="slider-row">
+            <label>Healthy Tissue Uptake Rate (k<sub>in</sub>, 1/s):</label>
+            <input type="range" id="healthyKin" min="0.005" max="0.05" step="0.001" value="0.01">
+            <span id="healthyKinVal">0.01</span>
+            <span class="info-icon" id="info-healthyKin">&#x2753;</span>
+        </div>
+        <div class="slider-row">
+            <label>Injected Dose (arbitrary units):</label>
+            <input type="range" id="dose" min="100" max="5000" step="10" value="1000">
+            <span id="doseVal">1000</span>
+            <span class="info-icon" id="info-dose">&#x2753;</span>
+        </div>
+        <div class="slider-row">
+            <label>Detector Noise Level:</label>
+            <input type="range" id="noise" min="0" max="0.2" step="0.01" value="0.05">
+            <span id="noiseVal">0.05</span>
+            <span class="info-icon" id="info-noise">&#x2753;</span>
+        </div>
+        <button id="startSim" class="primary-btn">Start Simulation</button>
+        </div>
+        <div class="main">
+            <div class="heatmap-container card">
+                <canvas id="heatmap" width="500" height="500"></canvas>
+                <div id="detection-result" class="detection-result"></div>
+            </div>
+        <div class="chart-container card">
+                <canvas id="activityChart"></canvas>
+                <div class="chart-note">
+                    <p><strong>Note:</strong> The graph shows the average tracer activity over time for tumor and healthy tissue regions. Tumor tissue typically has higher uptake and slower washout, causing it to "light up" compared to healthy tissue. This difference is the basis for PET imaging in cancer detection.</p>
+                    <button id="downloadData">Download Graph Data (CSV)</button>
+                </div>
+            </div>
+        </div>
+        <div class="time-controls card">
+        <label>Time: <input type="range" id="timeSlider" min="0" max="600" value="0"><span id="timeVal">0</span> s</label>
+        </div>
+        <div id="system-prompt" class="system-prompt" style="display:none;"></div>
+        <script src="visualize.js"></script>
+</body>
+</html>
